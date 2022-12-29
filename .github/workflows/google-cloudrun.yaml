@@ -55,6 +55,7 @@ env:
   REPOSITORY_NAME: github-artifact
   IMAGE_NAME: backend
   REGION: asia-south1
+  SERVICE: github
 
 jobs:
 #  build_and_test:
