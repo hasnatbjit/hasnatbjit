@@ -153,7 +153,7 @@ jobs:
           region: ${{ env.REGION }}
           # NOTE: If using a pre-built image, update the image name here
 #          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          image:  gcloud run deploy \
+          image:  gcloud run deploy github \
             --image "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}" \
             --quiet \
             --platform managed \
