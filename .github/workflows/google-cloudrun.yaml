@@ -77,8 +77,9 @@ jobs:
       - name: Test with Maven
         run: mvn test
       - name: Package with maven
-        run: mvn package
+      - run: mvn package
       - run: mkdir artifact && cp target/*.jar artifact
+      - run: ls -lat
       - uses: actions/upload-artifact@v2
         with:
           name: Package
