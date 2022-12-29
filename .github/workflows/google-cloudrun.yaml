@@ -122,10 +122,25 @@ jobs:
           password: '${{ steps.auth.outputs.access_token }}'
           registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
 
-      - name: Uploaded Artifact
-        uses: actions/upload-artifact@v2
+      - name: Set up JDK 8
+        uses: actions/setup-java@v1
         with:
-          name: Package
+          java-version: 1.8
+          distribution: 'adopt'
+      - name: Cache the Maven packages to speed up build
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml -DskipTests
+      - name: Package with Maven
+        run: |
+          mvn clean install
+          mkdir artifact && cp target/*.jar artifact
+          ls -lat
+          ls -lat artifact
       - name: Build and Push Container
         run: |-
           docker build -t ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} ./
