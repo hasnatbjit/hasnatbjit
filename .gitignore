@@ -199,3 +199,6 @@ README.html
 *.iml
 .idea
 .exercism
+
+### Some additional file ignores (check later)
+.github/workflows/Hello_world.yaml
